@@ -1,6 +1,6 @@
 ﻿Write-Host "Überprüfung gestartet"
 
-$services = Get-Service | Where-Object {$_.StartType -eq "Automatic"} | Where-Object {$_.Status -eq "Stopped"}
+$services = Get-Service | Where-Object {$_.StartType -eq "Automatic"} | Where-Object {$_.Status -eq "Stopped"} | Where-Object {$_.DisplayName -notmatch "Google"} 
 
 if ($services.Length -ge 1) {
     Write-Host "Name aller Dienste die nicht gestartet wurden:"

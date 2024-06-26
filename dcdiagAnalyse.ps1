@@ -17,19 +17,14 @@ $testList = @(
 
 $dcDiagOutput = Get-Content "..\dcdiag output.txt"
 
-$allTests = @()
-$testName = @()
-
 foreach ($line in $dcDiagOutput) {
-    if ($line -match "Starting test: [A-Za-z]+") {
-        $allTests += $line.Substring($line.IndexOf(":")+2)
+    if ($line -match "\s+\.+\s([A-Za-z0-9]+( [A-Za-z0-9]+)+)\.") {
+        $line = $line.Substring($line.IndexOf("Test ")+5)
+        $line = $line.Substring(0, $line.Length-1)
+        $line = $line.Replace(" ", " - ")
+        if ($line.Substring(0, $line.IndexOf(" ")) -in $testList)
+        {
+            Write-Host $line
+        }
     }
 }
-
-foreach ($name in $allTests) {
-    if ($name -in $testList) {
-        $testName += $name
-    }
-}
-
-Write-Host $testName

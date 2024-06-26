@@ -1,5 +1,4 @@
-﻿Write-Host ""
-Write-Host "Überprüfung gestartet"
+﻿Write-Host "Überprüfung gestartet"
 
 $exclusion = Get-Content "exclusionlist.txt" | Select-Object -Skip 1
 $services = Get-Service | Where-Object {$_.StartType -eq "Automatic"} | Where-Object {$_.Status -eq "Stopped"} | Where-Object {$_.DisplayName -notmatch "Google"} | Where-Object {$_.DisplayName -notin $exclusion}
